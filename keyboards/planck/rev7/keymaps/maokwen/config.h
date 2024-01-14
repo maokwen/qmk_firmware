@@ -17,10 +17,18 @@
 #pragma once
 
 #ifdef AUDIO_ENABLE
-#    define STARTUP_SONG SONG(PLANCK_SOUND)
-// #define STARTUP_SONG SONG(NO_SOUND)
-
-#    define DEFAULT_LAYER_SONGS \
+#define TEMPO_DEFAULT 120
+#define ZELDA_PUZZLE \
+   Q__NOTE(_G5),     \
+   Q__NOTE(_FS5),    \
+   Q__NOTE(_F5),     \
+   Q__NOTE(_CS5),    \
+   Q__NOTE(_C5),     \
+   Q__NOTE(_E5),     \
+   Q__NOTE(_G5),     \
+   HD_NOTE(_B5),
+#define STARTUP_SONG SONG(ZELDA_PUZZLE)
+#define DEFAULT_LAYER_SONGS \
         { SONG(QWERTY_SOUND), SONG(COLEMAK_SOUND), SONG(DVORAK_SOUND) }
 #endif
 
@@ -41,3 +49,20 @@
    - etc.
 */
 // #define MIDI_ADVANCED
+
+/*
+ * One Shot Keys options
+ */
+#define ONESHOT_TAP_TOGGLE 3  /* Tapping this number of times holds the key until tapped once again. */
+#define ONESHOT_TIMEOUT 3000  /* Time (in ms) before the one shot key is released */
+
+/*
+ * Unicode options
+ */
+#define UNICODE_SELECTED_MODES UNICODE_MODE_WINCOMPOSE, UNICODE_MODE_LINUX, UNICODE_MODE_MACOS
+#define UNICODE_KEY_WINC KC_RIGHT_ALT
+
+/*
+ * MIDI options
+ */
+#define MIDI_BASIC
