@@ -7,7 +7,12 @@
         "**/.build": true,
         "**/*.hex": true,
         "**/*.bin": true,
-        "**/*.uf2": true
+        "**/*.uf2": true,
+        // exclude all but planck
+        "keyboards/[^p]*": true,
+        "keyboards/p[^l]*": true,
+        "keyboards/pl[^a]*": true,
+        "keyboards/pla[^n]*": true,
     },
     "files.associations": {
         "*.h": "c",
