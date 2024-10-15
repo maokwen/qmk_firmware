@@ -25,19 +25,10 @@ enum planck_layers { _QWERTY, _LOWER, _RAISE, _FUNC, _ADJUST };
 #define KUC_CLQ UC(0x300C)
 #define KUC_CRQ UC(0x300D)
 
-// enum navigation_keycodes {
-//     LV_OUT = SAFE_RANGE, // (Level) Go out: Alt + Up
-//     LV_IN              , // (Level) Go in: Alt + Down
-//     LV_BK              , // (Level) Go back: Alt + Left
-//     LV_FWD             , // (Level) Go forward: Alt + Right
-//     AR_UP              , // (Area) Move up: Ctrl + Up
-//     AR_DN              , // (Area) Move down: Ctrl + Down
-//     AR_LT              , // (Area) Move left: Ctrl + Left
-//     AR_RT              , // (Area) Move right: Ctrl + Right
-// };
-//
-// enum edit_keycodes {
-// };
+enum virtual_desktop_keycodes {
+    VD_NXT = SAFE_RANGE,
+    VD_FWD,
+};
 
 /* clang-format off */
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -89,7 +80,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------+------+------+------+------+------|------+
  * |AShift|      |      |      |      |      | RAlt | Home |      |  End |      |      |
  * |------+------+------+------+------+------+------+------+------+------+------|------+
- * |      |      |      |      |      |             |      |      |      |      |      |
+ * |      |      |      |      |      |             |      |VD_FWD|      |      |VD_NXT|
  * `-----------------------------------------------------------------------------------'
  */
 
@@ -97,7 +88,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     _______, _______, _______, _______, _______, _______, _______, KC_PGUP, KC_UP  , KC_PGDN, _______, KC_DEL ,
     _______, _______, _______, _______, _______, _______, _______, KC_LEFT, KC_DOWN, KC_RGHT, _______, _______,
     AS_TOGG, _______, _______, _______, _______, _______, KC_RALT, KC_HOME, _______, KC_END , _______, _______,
-    _______, _______, _______, _______, _______, _______         , _______, _______, _______, _______, _______
+    _______, _______, _______, _______, _______, _______         , _______, VD_FWD , _______, _______, VD_NXT
 ),
 
 /* Func: left hand - functions
@@ -116,7 +107,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     _______, KC_F1  , KC_F2  , KC_F3  , KC_F4  , _______, _______, KC_F13 , KC_F14 , KC_F15 , KC_F16 , _______,
     _______, KC_F5  , KC_F6  , KC_F7  , KC_F8  , _______, _______, KC_F17 , KC_F18 , KC_F19 , KC_F20 , _______,
     _______, KC_F9  , KC_F10 , KC_F11 , KC_F12 , _______, _______, KC_F21 , KC_F22 , KC_F23 , KC_F24 , _______,
-    _______, _______, _______, _______, _______, _______         , _______, _______, _______, _______, _______
+    _______, _______, _______, _______, _______, _______         , _______, _______ , _______, _______, _______
 ),
 
 /* Adjust (Func + Raise)
@@ -189,6 +180,34 @@ void oneshot_layer_changed_user(uint8_t layer) {
 }
 #endif
 
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+    case VD_NXT:
+        if (record->event.pressed) {
+            register_code(KC_LALT);
+            register_code(KC_LGUI);
+            tap_code(KC_RGHT);
+            unregister_code(KC_LALT);
+            unregister_code(KC_LGUI);
+        } else {
+            // when keycode QMKBEST is released
+        }
+        break;
+    case VD_FWD:
+        if (record->event.pressed) {
+            register_code(KC_LALT);
+            register_code(KC_LGUI);
+            tap_code(KC_LEFT);
+            unregister_code(KC_LALT);
+            unregister_code(KC_LGUI);
+        } else {
+            // when keycode QMKBEST is released
+        }
+        break;
+   }
+
+    return true;
+};
 
 // bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 //     switch (keycode) {
