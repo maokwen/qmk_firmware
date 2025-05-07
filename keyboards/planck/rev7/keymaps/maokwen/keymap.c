@@ -74,7 +74,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /* Raise: right hand - movement, edit operators
  * ,-----------------------------------------------------------------------------------.
- * |      |      |      |CV(UP)|      |      |      | PgUp |  Up  | PgDn |      |  Del |
+ * |      |      |      |CV(UP)|      |      |      | PgUp |  Up  | PgDn |PrtScn|  Del |
  * |------+------+------+------+------+------+------+------+------+------+------|------+
  * |KC_CAP|      |CV(LT)|CV(DN)|CV(RT)|      |      | Left | Down | Right|      |      |
  * |------+------+------+------+------+------+------+------+------+------+------|------+
@@ -85,7 +85,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 
 [_RAISE] = LAYOUT_planck_mit(
-    _______, _______, _______, _______, _______, _______, _______, KC_PGUP, KC_UP  , KC_PGDN, _______, KC_DEL ,
+    _______, _______, _______, _______, _______, _______, _______, KC_PGUP, KC_UP  , KC_PGDN, KC_PSCR, KC_DEL ,
     KC_CAPS, _______, _______, _______, _______, _______, _______, KC_LEFT, KC_DOWN, KC_RGHT, _______, _______,
     AS_TOGG, _______, _______, _______, _______, _______, KC_RALT, KC_HOME, _______, KC_END , _______, _______,
     _______, _______, _______, _______, _______, _______         , _______, VD_FWD , _______, _______, VD_NXT
@@ -163,11 +163,10 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 
 #ifdef AUDIO_ENABLE
 float shot_timeout_song[][2] = SONG(Q__NOTE(_E4));
-float layer1_shot_song[][2] = SONG(Q__NOTE(_E2));
+float layer1_shot_song[][2]  = SONG(Q__NOTE(_E2));
 
 void oneshot_layer_changed_user(uint8_t layer) {
-    switch (layer)
-    {
+    switch (layer) {
     case 0:
         PLAY_SONG(shot_timeout_song);
         break;
@@ -204,7 +203,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             // when keycode QMKBEST is released
         }
         break;
-   }
+    }
 
     return true;
 };
